@@ -1,0 +1,283 @@
+/* ==========================================================================
+   Having Funds Consulting, design tokens dan gaya dasar
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Unbounded:wght@400;500;600;700&display=swap");
+
+:root {
+  --ink: #06101f;
+  --navy: #0b2545;
+  --blue: #1f4e89;
+  --sky: #5fa8d3;
+  --ice: #c9e4f5;
+  --mist: #eef5fb;
+  --white: #ffffff;
+  --text: #0d1b2e;
+  --muted: #4f6076;
+  --line: rgba(11, 37, 69, 0.14);
+  --line-dark: rgba(201, 228, 245, 0.16);
+
+  --font-display: "Unbounded", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
+  --wrap: 1200px;
+  --gutter: clamp(20px, 4vw, 48px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: inherit;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--sky);
+  outline-offset: 3px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.sec {
+  position: relative;
+  padding-block: clamp(80px, 11vw, 140px);
+}
+
+.sec--dark {
+  background: var(--ink);
+  color: #e6f1fa;
+  overflow: hidden;
+}
+
+.sec--mist {
+  background: var(--mist);
+}
+
+.sec-head {
+  display: grid;
+  gap: 18px;
+  max-width: 720px;
+  margin-bottom: clamp(44px, 6vw, 72px);
+}
+
+.sec-head h2 {
+  font-size: clamp(1.8rem, 3.6vw, 2.9rem);
+  color: var(--navy);
+}
+
+.sec--dark .sec-head h2 {
+  color: var(--white);
+}
+
+.sec-head p {
+  font-size: 1.05rem;
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+.sec--dark .sec-head p {
+  color: #a9c3d8;
+}
+
+.icon {
+  flex: none;
+}
+
+/* ---------- Tombol ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 24px;
+  font: 600 0.95rem/1 var(--font-body);
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.35s var(--ease), background-color 0.35s var(--ease),
+    color 0.35s var(--ease), border-color 0.35s var(--ease);
+  white-space: nowrap;
+}
+
+.btn .icon {
+  transition: transform 0.35s var(--ease);
+}
+
+.btn:hover .icon {
+  transform: translateX(4px);
+}
+
+.btn--solid {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.btn--solid:hover {
+  background: var(--blue);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--navy);
+  border-color: var(--line);
+}
+
+.btn--ghost:hover {
+  border-color: var(--navy);
+}
+
+.btn--light {
+  background: var(--ice);
+  color: var(--ink);
+}
+
+.btn--light:hover {
+  background: var(--white);
+}
+
+.btn--outline-dark {
+  background: transparent;
+  color: var(--ice);
+  border-color: var(--line-dark);
+}
+
+.btn--outline-dark:hover {
+  border-color: var(--sky);
+}
+
+/* ---------- Animasi pembuka hero ---------- */
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-rev {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes fill-meter {
+  from {
+    width: 0%;
+  }
+  to {
+    width: var(--v, 100%);
+  }
+}
+
+@keyframes pulse-core {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes tick {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes flow {
+  to {
+    stroke-dashoffset: -64;
+  }
+}
+
+/* Reveal: hanya aktif bila JavaScript berjalan. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+
+.js [data-reveal].in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Progress bar membaca posisi scroll. */
+.progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--sky), var(--ice));
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  z-index: 60;
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}

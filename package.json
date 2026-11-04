@@ -1,0 +1,20 @@
+{
+  "name": "havingfunds-landing",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing page statis Having Funds Consulting",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "^5.1.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "typescript": "^5.6.0"
+  }
+}

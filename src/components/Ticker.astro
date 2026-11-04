@@ -1,0 +1,50 @@
+---
+import { tickerItems } from "../data/site";
+import Icon from "./Icon.astro";
+const items = [...tickerItems, ...tickerItems];
+---
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    {items.map((t) => (
+      <span class="ticker__item">
+        <Icon name="cross" size={14} />
+        {t}
+      </span>
+    ))}
+  </div>
+</div>
+
+<style>
+  .ticker {
+    overflow: hidden;
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+    padding-block: 22px;
+  }
+
+  .ticker__track {
+    display: flex;
+    width: max-content;
+    animation: tick 38s linear infinite;
+  }
+
+  .ticker__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 22px;
+    padding-right: 22px;
+    font: 600 1.02rem/1 var(--font-display);
+    color: var(--navy);
+    white-space: nowrap;
+  }
+
+  .ticker__item .icon {
+    color: var(--sky);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker__track {
+      animation: none;
+    }
+  }
+</style>

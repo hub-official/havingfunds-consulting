@@ -1,0 +1,164 @@
+---
+import { phases } from "../data/site";
+---
+<section class="sec sec--mist" id="roadmap">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <h2>Lima fase menuju kesiapan investasi.</h2>
+      <p>Setiap fase menghasilkan output yang menjadi syarat fase berikutnya. Perusahaan tidak perlu menunggu semua dokumen selesai untuk mulai memakai sebagiannya.</p>
+    </div>
+
+    <div class="track" data-draw>
+      <svg class="track__line" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true">
+        <path class="track__path" d="M0 20 H1000" pathLength="1000" />
+      </svg>
+
+      <ol class="track__steps">
+        {phases.map((ph, i) => (
+          <li class="step" data-reveal style={`--d:${i * 110}ms`}>
+            <span class="step__dot" aria-hidden="true"></span>
+            <p class="step__time">{ph.time}</p>
+            <h3 class="step__title">{ph.title}</h3>
+            <p class="step__focus">{ph.focus}</p>
+            <p class="step__out">
+              <span>Output</span>
+              {ph.output}
+            </p>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <p class="roadmap__note" data-reveal>
+      Urutan ini sengaja dibuat berdasarkan bukti. Kontrak atau LOI pembeli industri menjadi penguat utama untuk fase pendanaan.
+    </p>
+  </div>
+</section>
+
+<style>
+  .track {
+    position: relative;
+    --p: 0;
+  }
+
+  .track__line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -9px;
+    width: 100%;
+    height: 40px;
+    overflow: visible;
+  }
+
+  .track__path {
+    fill: none;
+    stroke: var(--sky);
+    stroke-width: 1.5;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: calc(1000 - (1000 * var(--p)));
+    transition: stroke-dashoffset 0.2s linear;
+  }
+
+  .track__steps {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+    padding-top: 0;
+  }
+
+  .step {
+    position: relative;
+    padding-top: 48px;
+  }
+
+  .step__dot {
+    position: absolute;
+    top: 3px;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2px solid var(--navy);
+    box-shadow: 0 0 0 6px var(--mist);
+  }
+
+  .step:nth-child(4) .step__dot,
+  .step:nth-child(5) .step__dot {
+    background: var(--navy);
+  }
+
+  .step__time {
+    font: 600 0.8rem/1.2 var(--font-body);
+    color: var(--blue);
+    margin-bottom: 10px;
+  }
+
+  .step__title {
+    font-size: 1.1rem;
+    color: var(--navy);
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+
+  .step__focus {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-bottom: 18px;
+    min-height: 6.5em;
+  }
+
+  .step__out {
+    font-size: 0.85rem;
+    color: var(--navy);
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    gap: 4px;
+  }
+
+  .step__out span {
+    font: 700 0.72rem/1 var(--font-body);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sky);
+  }
+
+  .roadmap__note {
+    margin-top: 64px;
+    max-width: 60ch;
+    color: var(--muted);
+    font-size: 1rem;
+    padding-left: 22px;
+    border-left: 2px solid var(--sky);
+  }
+
+  @media (max-width: 1020px) {
+    .track__steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .track__line {
+      display: none;
+    }
+
+    .step:nth-child(odd) {
+      padding-right: 0;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .track__steps {
+      grid-template-columns: 1fr;
+    }
+
+    .step__focus {
+      min-height: 0;
+    }
+  }
+</style>

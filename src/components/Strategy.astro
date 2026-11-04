@@ -1,0 +1,202 @@
+---
+import Icon from "./Icon.astro";
+---
+<section class="sec sec--dark" id="strategi">
+  <div class="wrap strategy">
+    <div class="strategy__copy" data-reveal>
+      <h2>Strategi rantai nilai, dari pemasok hingga mitra komersial.</h2>
+      <p class="strategy__lead">
+        Ketergantungan pada transaksi spot membuat pendapatan fluktuatif. Kami membangun struktur yang kokoh: kemitraan komersial terikat kontrak berjangka di hilir, ditopang skema kemitraan pemasok terstandarisasi di hulu.
+      </p>
+
+      <ol class="strategy__points">
+        <li>
+          <Icon name="link" size={20} />
+          <div>
+            <p class="pt-title">Mitra komersial sebagai jangkar</p>
+            <p class="pt-text">Penawaran kemitraan komersial ke offtaker atau pembeli institusional dengan volume terencana dan kontrak berjangka.</p>
+          </div>
+        </li>
+        <li>
+          <Icon name="users" size={20} />
+          <div>
+            <p class="pt-title">Mitra pemasok sebagai penopang pasokan</p>
+            <p class="pt-text">Skema pasokan, standar mutu, formula harga, dan pembagian nilai dituangkan dalam deck skema kemitraan pemasok.</p>
+          </div>
+        </li>
+        <li>
+          <Icon name="spark" size={20} />
+          <div>
+            <p class="pt-title">Bukti sebelum pendanaan</p>
+            <p class="pt-text">Dokumen penawaran dan kesepakatan komersial awal menjadi landasan validasi riil saat pitching ke calon investor.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="flow" data-reveal style="--d:150ms">
+      <svg viewBox="0 0 600 520" role="img" aria-label="Diagram rantai nilai operasional: fasilitas hulu memasok pusat operasi, terhubung dengan mitra pemasok, pembeli institusional komersial, dan kanal distribusi.">
+        <defs>
+          <radialGradient id="hubGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#5FA8D3" stop-opacity="0.45" />
+            <stop offset="100%" stop-color="#5FA8D3" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+
+        <circle cx="300" cy="260" r="120" fill="url(#hubGlow)" />
+
+        <!-- Aliran -->
+        <g class="flows" fill="none" stroke="#5FA8D3" stroke-width="1.6" stroke-linecap="round">
+          <path d="M300 136 V196" />
+          <path d="M300 384 V324" />
+          <path d="M190 260 H230" />
+          <path d="M370 232 L410 170" />
+          <path d="M370 288 L410 350" />
+        </g>
+        <g class="flows flows--alt" fill="none" stroke="#C9E4F5" stroke-width="1.2" stroke-linecap="round" opacity="0.7">
+          <path d="M300 136 V196" />
+          <path d="M300 384 V324" />
+          <path d="M190 260 H230" />
+          <path d="M370 232 L410 170" />
+          <path d="M370 288 L410 350" />
+        </g>
+
+        <!-- Hub -->
+        <circle cx="300" cy="260" r="62" fill="#0B2545" stroke="#5FA8D3" stroke-width="1.4" />
+        <circle cx="300" cy="260" r="80" fill="none" stroke="#5FA8D3" stroke-opacity="0.35" stroke-dasharray="3 6" />
+        <text x="300" y="256" text-anchor="middle" class="t-hub">Hub</text>
+        <text x="300" y="278" text-anchor="middle" class="t-sub">operasi</text>
+
+        <!-- Simpul -->
+        <g class="node-box">
+          <rect x="210" y="34" width="180" height="66" rx="4" />
+          <text x="300" y="62" text-anchor="middle" class="t-title">Fasilitas pasokan hulu</text>
+          <text x="300" y="84" text-anchor="middle" class="t-sub">Input dan standardisasi</text>
+        </g>
+        <g class="node-box">
+          <rect x="210" y="420" width="180" height="66" rx="4" />
+          <text x="300" y="448" text-anchor="middle" class="t-title">Hub logistik & distribusi</text>
+          <text x="300" y="470" text-anchor="middle" class="t-sub">Fulfillment & delivery</text>
+        </g>
+        <g class="node-box">
+          <rect x="10" y="227" width="180" height="66" rx="4" />
+          <text x="100" y="255" text-anchor="middle" class="t-title">Mitra pemasok</text>
+          <text x="100" y="277" text-anchor="middle" class="t-sub">Rantai pasok pendukung</text>
+        </g>
+        <g class="node-box node-box--hi">
+          <rect x="410" y="137" width="180" height="66" rx="4" />
+          <text x="500" y="165" text-anchor="middle" class="t-title">Mitra komersial (B2B)</text>
+          <text x="500" y="187" text-anchor="middle" class="t-sub">Kontrak offtaker berjangka</text>
+        </g>
+        <g class="node-box">
+          <rect x="410" y="317" width="180" height="66" rx="4" />
+          <text x="500" y="345" text-anchor="middle" class="t-title">Kanal sekunder</text>
+          <text x="500" y="367" text-anchor="middle" class="t-sub">Distributor & kanal ritel</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  .strategy {
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: clamp(40px, 6vw, 88px);
+    align-items: center;
+  }
+
+  .strategy h2 {
+    font-size: clamp(1.8rem, 3.4vw, 2.7rem);
+    color: var(--white);
+    margin-bottom: 22px;
+  }
+
+  .strategy__lead {
+    color: #a9c3d8;
+    font-size: 1.02rem;
+    max-width: 52ch;
+    margin-bottom: 40px;
+  }
+
+  .strategy__points {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 26px;
+  }
+
+  .strategy__points li {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    align-items: start;
+    padding-top: 22px;
+    border-top: 1px solid var(--line-dark);
+  }
+
+  .strategy__points .icon {
+    color: var(--sky);
+    margin-top: 2px;
+  }
+
+  .pt-title {
+    font: 600 1rem/1.3 var(--font-body);
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .pt-text {
+    color: #9fbcd3;
+    font-size: 0.95rem;
+  }
+
+  .flow svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .flows path {
+    stroke-dasharray: 6 10;
+    animation: flow 1.6s linear infinite;
+  }
+
+  .flows--alt path {
+    stroke-dasharray: 2 12;
+    animation-duration: 2.8s;
+  }
+
+  .node-box rect {
+    fill: rgba(6, 16, 31, 0.9);
+    stroke: rgba(201, 228, 245, 0.28);
+    stroke-width: 1;
+  }
+
+  .node-box--hi rect {
+    fill: var(--blue);
+    stroke: var(--sky);
+  }
+
+  .t-hub {
+    font: 600 22px var(--font-display);
+    fill: var(--white);
+  }
+
+  .t-title {
+    font: 600 17px var(--font-body);
+    fill: var(--white);
+  }
+
+  .t-sub {
+    font: 500 14px var(--font-body);
+    fill: #9fbcd3;
+  }
+
+  @media (max-width: 920px) {
+    .strategy {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

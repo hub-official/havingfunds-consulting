@@ -1,0 +1,854 @@
+---
+import { packages, addon, scaleTiers, sectorModules } from "../data/site";
+import Icon from "./Icon.astro";
+
+const defaultScale = "Rp10–25 M";
+---
+<section class="sec sec--mist" id="paket">
+  <div class="wrap wrap--wide">
+    <div class="sec-head" data-reveal>
+      <div class="sec-badge">Struktur Paket & Tarif Indikatif</div>
+      <h2>Empat tingkat kesiapan, dari diagnostik awal hingga kesiapan institusional.</h2>
+      <p>
+        Setiap paket dirancang spesifik sesuai tahapan dan target skala pencarian investasi Anda. 
+        Tarif indikatif dalam Rupiah dan belum termasuk pajak. Biaya advokat, notaris, KAP, dan penilai aset tidak termasuk dan dihitung terpisah.
+      </p>
+    </div>
+
+    <!-- Filter Skala Investasi Interaktif -->
+    <div class="scale-filter" data-reveal>
+      <span class="scale-filter__label">Pilih skala target investasi Anda:</span>
+      <div class="scale-filter__pills" role="tablist" aria-label="Skala Investasi">
+        {scaleTiers.scales.map((s, idx) => (
+          <button
+            type="button"
+            class={`scale-pill ${idx === 0 ? "is-active" : ""}`}
+            data-scale={s}
+            role="tab"
+            aria-selected={idx === 0 ? "true" : "false"}
+          >
+            <span class="scale-pill__dot"></span>
+            {s}
+          </button>
+        ))}
+      </div>
+      <p class="scale-filter__hint">
+        <Icon name="spark" size={15} />
+        Tarif paket otomatis menyesuaikan ticket size target investasi di bawah.
+      </p>
+    </div>
+
+    <!-- Grid 4 Kartu Paket -->
+    <div class="pkgs">
+      {packages.map((p, i) => {
+        const initialPrice = p.tierPrices ? p.tierPrices[defaultScale] : p.priceRange;
+        const isUnavailable = initialPrice === "Tidak ditawarkan";
+        return (
+          <article
+            class={`pkg ${p.featured ? "pkg--feat" : ""} ${p.key === "diagnostik" ? "pkg--diag" : ""}`}
+            data-reveal
+            style={`--d:${i * 90}ms`}
+            data-pkg-card={p.key}
+          >
+            {p.featured && <span class="pkg__badge">Paling komprehensif</span>}
+            {p.key === "diagnostik" && <span class="pkg__badge pkg__badge--subtle">Scan awal</span>}
+
+            <header class="pkg__head">
+              <h3 class="pkg__name">{p.name}</h3>
+              <p class="pkg__for">{p.for}</p>
+            </header>
+
+            <div class="pkg__pricing">
+              <p class="pkg__price">
+                <span
+                  class="pkg__price-val"
+                  data-pkg-price={p.key}
+                  data-prices={JSON.stringify(p.tierPrices || {})}
+                >
+                  {initialPrice}
+                </span>
+              </p>
+              <p class="pkg__price-sub" data-pkg-sub={p.key}>
+                {isUnavailable ? "Pilih paket Growth / Enterprise" : "Indikasi biaya penyiapan"}
+              </p>
+            </div>
+
+            <div class="pkg__time">
+              <Icon name="gauge" size={16} />
+              <span>Estimasi {p.time}</span>
+            </div>
+
+            <div class="pkg__divider"></div>
+
+            <ul class="pkg__list">
+              {p.features.map((f) => (
+                <li class={f.on ? "is-on" : "is-off"}>
+                  <span class="pkg__icon-wrap">
+                    <Icon name={f.on ? "check" : "cross"} size={15} />
+                  </span>
+                  <span>{f.t}</span>
+                </li>
+              ))}
+            </ul>
+
+            <footer class="pkg__foot">
+              <a
+                class={`btn ${p.featured ? "btn--light" : "btn--solid"} pkg__cta`}
+                href="#kontak"
+                data-pkg-btn={p.key}
+              >
+                <span>{isUnavailable ? "Konsultasikan Opsi" : `Pilih ${p.name}`}</span>
+                <Icon name="arrow" size={16} />
+              </a>
+              <p class="pkg__legal-note">Belum termasuk pajak & jasa penunjang eksternal</p>
+            </footer>
+          </article>
+        );
+      })}
+    </div>
+
+    <!-- Notice Biaya Jasa Eksternal -->
+    <div class="legal-disclaimer" data-reveal>
+      <div class="legal-disclaimer__icon">
+        <Icon name="scale" size={22} />
+      </div>
+      <div class="legal-disclaimer__content">
+        <strong>Pemberitahuan Wajib:</strong> Biaya advokat, notaris perseroan, KAP untuk audit laporan keuangan, dan KJPP penilai aset tidak termasuk dalam lingkup Having Funds Consulting dan dihitung terpisah sesuai kebutuhan klien. Jasa ini tidak menjamin perolehan pendanaan atau kontrak pembeli.
+      </div>
+    </div>
+
+    <!-- Modul Tambahan Lintas Sektor (Showcase) -->
+    <div class="sectors-section" data-reveal>
+      <div class="sectors-section__head">
+        <div class="sec-badge">Keahlian Domain Lintas Sektor</div>
+        <h3>Modul checklist & parameter khusus sektor (add-on opsional).</h3>
+        <p>
+          Setiap sektor memiliki dinamika rantai pasok dan variabel risiko yang berbeda. 
+          Modul sektor kami menambahkan parameter asumsi finansial teruji dan checklist kesiapan operasional spesifik.
+        </p>
+      </div>
+
+      <div class="sectors-grid">
+        {sectorModules.map((sm) => (
+          <div class="sector-card">
+            <header class="sector-card__head">
+              <div class="sector-card__icon-dot"></div>
+              <h4>{sm.name}</h4>
+            </header>
+            <p class="sector-card__desc">{sm.description}</p>
+            <div class="sector-card__assumptions">
+              <span class="sector-card__tag">Fokus asumsi:</span>
+              <ul>
+                {sm.keyAssumptions.slice(0, 3).map((ka) => (
+                  <li>{ka}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Addon Section -->
+    <div class="addon-panel" data-reveal>
+      <div class="addon-card">
+        <div class="addon-card__icon"><Icon name="layers" size={28} /></div>
+        <div class="addon-card__info">
+          <div class="addon-card__badge">Add-on Teknis</div>
+          <h4 class="addon-card__name">{addon.name}</h4>
+          <p class="addon-card__note">{addon.note}</p>
+        </div>
+        <div class="addon-card__price">{addon.range}</div>
+      </div>
+
+      <div class="addon-subgrid">
+        {addon.additionalAddons?.map((sub) => (
+          <div class="addon-subcard">
+            <div>
+              <h5 class="addon-subcard__title">{sub.name}</h5>
+              <p class="addon-subcard__note">{sub.note}</p>
+            </div>
+            <span class="addon-subcard__tag">{sub.range}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Logika interaktif pengubah skala harga
+  function initPricingScale(): void {
+    const pills = document.querySelectorAll<HTMLButtonElement>(".scale-pill");
+    const priceElements = document.querySelectorAll<HTMLElement>("[data-pkg-price]");
+    const subElements = document.querySelectorAll<HTMLElement>("[data-pkg-sub]");
+    const btnElements = document.querySelectorAll<HTMLAnchorElement>("[data-pkg-btn]");
+    const cards = document.querySelectorAll<HTMLElement>("[data-pkg-card]");
+
+    if (!pills.length) return;
+
+    pills.forEach((pill) => {
+      pill.addEventListener("click", () => {
+        const selectedScale = pill.getAttribute("data-scale");
+        if (!selectedScale) return;
+
+        // Ubah state pill aktif
+        pills.forEach((p) => {
+          p.classList.remove("is-active");
+          p.setAttribute("aria-selected", "false");
+        });
+        pill.classList.add("is-active");
+        pill.setAttribute("aria-selected", "true");
+
+        // Perbarui setiap kartu paket
+        priceElements.forEach((el) => {
+          const pkgKey = el.getAttribute("data-pkg-price");
+          const pricesDataStr = el.getAttribute("data-prices");
+          if (!pricesDataStr || !pkgKey) return;
+
+          try {
+            const prices = JSON.parse(pricesDataStr);
+            const newPrice = prices[selectedScale] || "Konsultasikan";
+
+            // Animasi halus penggantian harga
+            el.style.opacity = "0.3";
+            setTimeout(() => {
+              el.textContent = newPrice;
+              el.style.opacity = "1";
+            }, 120);
+
+            // Periksa jika paket Essential tidak ditawarkan pada skala Rp50-100M+
+            const isUnavailable = newPrice === "Tidak ditawarkan";
+            const subEl = document.querySelector<HTMLElement>(`[data-pkg-sub="${pkgKey}"]`);
+            const btnEl = document.querySelector<HTMLAnchorElement>(`[data-pkg-btn="${pkgKey}"]`);
+            const cardEl = document.querySelector<HTMLElement>(`[data-pkg-card="${pkgKey}"]`);
+
+            if (subEl) {
+              subEl.textContent = isUnavailable
+                ? "Skala ini memerlukan kelayakan penuh (Growth/Enterprise)"
+                : "Indikasi biaya penyiapan";
+              subEl.style.color = isUnavailable ? "#e06c75" : "";
+            }
+
+            if (btnEl) {
+              const span = btnEl.querySelector("span");
+              if (span) {
+                span.textContent = isUnavailable ? "Diskusikan Kebutuhan" : `Pilih ${pkgKey.charAt(0).toUpperCase() + pkgKey.slice(1)}`;
+              }
+            }
+
+            if (cardEl) {
+              cardEl.classList.toggle("pkg--disabled", isUnavailable);
+            }
+          } catch (e) {
+            console.error("Gagal memperbarui harga paket:", e);
+          }
+        });
+      });
+    });
+  }
+
+  // Inisialisasi saat DOM siap
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initPricingScale);
+  } else {
+    initPricingScale();
+  }
+</script>
+
+<style>
+  .wrap--wide {
+    max-width: 1360px !important;
+  }
+
+  .sec-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    background: var(--ice);
+    color: var(--navy);
+    font: 600 0.78rem/1 var(--font-body);
+    border-radius: 99px;
+    letter-spacing: 0.04em;
+    width: fit-content;
+  }
+
+  /* Filter Skala Investasi */
+  .scale-filter {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 34px;
+    padding: 20px 24px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px -8px rgba(11, 37, 69, 0.08);
+  }
+
+  .scale-filter__label {
+    font: 600 0.92rem/1.2 var(--font-body);
+    color: var(--navy);
+  }
+
+  .scale-filter__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .scale-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font: 600 0.95rem/1 var(--font-body);
+    color: var(--muted);
+    background: var(--mist);
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    cursor: pointer;
+    transition: all 0.25s var(--ease);
+  }
+
+  .scale-pill__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #a0aec0;
+    transition: all 0.25s var(--ease);
+  }
+
+  .scale-pill:hover {
+    color: var(--navy);
+    border-color: var(--blue);
+    background: var(--white);
+  }
+
+  .scale-pill.is-active {
+    color: var(--white);
+    background: var(--navy);
+    border-color: var(--navy);
+    box-shadow: 0 4px 12px rgba(11, 37, 69, 0.22);
+  }
+
+  .scale-pill.is-active .scale-pill__dot {
+    background: var(--sky);
+    box-shadow: 0 0 6px var(--sky);
+  }
+
+  .scale-filter__hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  /* Grid 4 Kolom Paket */
+  .pkgs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .pkg {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 18px 20px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    transition: all 0.35s var(--ease);
+    box-sizing: border-box;
+    min-width: 0;
+  }
+
+  .pkg:hover {
+    border-color: var(--sky);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -18px rgba(11, 37, 69, 0.18);
+  }
+
+  .pkg--diag {
+    border-left: 3px solid var(--sky);
+    background: linear-gradient(180deg, #ffffff 0%, #f7fafd 100%);
+  }
+
+  .pkg--feat {
+    background: var(--navy);
+    color: #e6f1fa;
+    border-color: var(--navy);
+    box-shadow: 0 12px 32px -12px rgba(11, 37, 69, 0.35);
+    overflow: hidden;
+  }
+
+  .pkg--feat::before {
+    content: "";
+    position: absolute;
+    right: -100px;
+    top: -100px;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    border: 1px dashed rgba(95, 168, 211, 0.3);
+    animation: spin 70s linear infinite;
+    pointer-events: none;
+  }
+
+  .pkg--disabled {
+    opacity: 0.72;
+    border-style: dashed;
+  }
+
+  .pkg__badge {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    padding: 4px 10px;
+    font: 600 0.7rem/1 var(--font-body);
+    color: var(--navy);
+    background: var(--ice);
+    border-radius: 99px;
+    letter-spacing: 0.02em;
+    z-index: 2;
+  }
+
+  .pkg__badge--subtle {
+    background: var(--mist);
+    border: 1px solid var(--line);
+    color: var(--blue);
+  }
+
+  .pkg__head {
+    margin-bottom: 14px;
+    padding-right: 60px;
+  }
+
+  .pkg__name {
+    font: 600 1.25rem/1.2 var(--font-display);
+    color: var(--navy);
+    letter-spacing: -0.01em;
+  }
+
+  .pkg--feat .pkg__name {
+    color: var(--white);
+  }
+
+  .pkg__for {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: var(--muted);
+    min-height: 42px;
+  }
+
+  .pkg--feat .pkg__for {
+    color: #a9c3d8;
+  }
+
+  .pkg__pricing {
+    margin-bottom: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+    min-height: 68px;
+  }
+
+  .pkg--feat .pkg__pricing {
+    border-color: var(--line-dark);
+  }
+
+  .pkg__price {
+    font: 600 clamp(1.35rem, 1.6vw, 1.7rem)/1.1 var(--font-display);
+    color: var(--navy);
+    letter-spacing: -0.02em;
+  }
+
+  .pkg--feat .pkg__price {
+    color: var(--white);
+  }
+
+  .pkg__price-val {
+    display: inline-block;
+    transition: opacity 0.2s var(--ease);
+    word-break: keep-all;
+    white-space: nowrap;
+  }
+
+  .pkg__price-sub {
+    font-size: 0.76rem;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.3;
+  }
+
+  .pkg--feat .pkg__price-sub {
+    color: #9abed6;
+  }
+
+  .pkg__time {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--blue);
+    margin-bottom: 14px;
+  }
+
+  .pkg--feat .pkg__time {
+    color: var(--sky);
+  }
+
+  .pkg__divider {
+    height: 1px;
+    background: var(--line);
+    margin-bottom: 16px;
+  }
+
+  .pkg--feat .pkg__divider {
+    background: var(--line-dark);
+  }
+
+  .pkg__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+    flex: 1;
+    margin-bottom: 20px;
+  }
+
+  .pkg__list li {
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    gap: 8px;
+    align-items: start;
+    font-size: 0.81rem;
+    line-height: 1.4;
+    color: var(--text);
+  }
+
+  .pkg__icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+  }
+
+  .pkg__list li.is-on .icon {
+    color: var(--blue);
+  }
+
+  .pkg--feat .pkg__list li.is-on .icon {
+    color: var(--sky);
+  }
+
+  .pkg__list li.is-off {
+    color: #9aa8b8;
+  }
+
+  .pkg__list li.is-off .icon {
+    color: #cbd5e1;
+  }
+
+  .pkg--feat .pkg__list li {
+    color: #dceaf6;
+  }
+
+  .pkg--feat .pkg__list li.is-off {
+    color: #627c95;
+  }
+
+  .pkg--feat .pkg__list li.is-off .icon {
+    color: #49637c;
+  }
+
+  .pkg__foot {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .pkg__cta {
+    justify-content: center;
+    padding: 12px 14px;
+    font-size: 0.88rem;
+    width: 100%;
+    text-align: center;
+    border-radius: 4px;
+  }
+
+  .pkg__legal-note {
+    font-size: 0.72rem;
+    color: #8fa0b2;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .pkg--feat .pkg__legal-note {
+    color: #7d9cb8;
+  }
+
+  /* Disclaimer Box */
+  .legal-disclaimer {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: center;
+    margin-top: 24px;
+    padding: 16px 20px;
+    background: #fdf6ec;
+    border: 1px solid #faecd8;
+    border-radius: 6px;
+    color: #7c4a03;
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+
+  .legal-disclaimer__icon {
+    color: #d97706;
+  }
+
+  /* Modul Khusus Sektor Showcase */
+  .sectors-section {
+    margin-top: 56px;
+    padding-top: 48px;
+    border-top: 1px solid var(--line);
+  }
+
+  .sectors-section__head {
+    max-width: 680px;
+    margin-bottom: 28px;
+  }
+
+  .sectors-section__head h3 {
+    font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+    color: var(--navy);
+    margin-top: 10px;
+    margin-bottom: 8px;
+  }
+
+  .sectors-section__head p {
+    font-size: 0.94rem;
+    color: var(--muted);
+  }
+
+  .sectors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .sector-card {
+    display: flex;
+    flex-direction: column;
+    padding: 22px 20px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .sector-card:hover {
+    border-color: var(--sky);
+    box-shadow: 0 10px 24px -10px rgba(11, 37, 69, 0.12);
+  }
+
+  .sector-card__head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .sector-card__icon-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--sky);
+  }
+
+  .sector-card__head h4 {
+    font: 600 1.05rem/1.2 var(--font-display);
+    color: var(--navy);
+  }
+
+  .sector-card__desc {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.45;
+    margin-bottom: 14px;
+    flex: 1;
+  }
+
+  .sector-card__assumptions {
+    padding-top: 12px;
+    border-top: 1px dashed var(--line);
+    font-size: 0.78rem;
+  }
+
+  .sector-card__tag {
+    font-weight: 700;
+    color: var(--blue);
+    display: block;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .sector-card__assumptions ul {
+    list-style: disc;
+    margin: 0;
+    padding-left: 16px;
+    display: grid;
+    gap: 3px;
+    color: var(--text);
+  }
+
+  /* Addon Panel */
+  .addon-panel {
+    margin-top: 36px;
+    display: grid;
+    gap: 16px;
+  }
+
+  .addon-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 20px;
+    padding: 22px 26px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    box-shadow: 0 4px 16px -6px rgba(11, 37, 69, 0.06);
+  }
+
+  .addon-card__icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    background: var(--mist);
+    border-radius: 8px;
+    color: var(--blue);
+  }
+
+  .addon-card__badge {
+    font: 700 0.7rem/1 var(--font-body);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sky);
+    margin-bottom: 4px;
+  }
+
+  .addon-card__name {
+    font: 600 1.05rem/1.3 var(--font-display);
+    color: var(--navy);
+  }
+
+  .addon-card__note {
+    font-size: 0.86rem;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .addon-card__price {
+    font: 600 1rem/1.2 var(--font-display);
+    color: var(--navy);
+    white-space: nowrap;
+    padding: 8px 14px;
+    background: var(--mist);
+    border-radius: 4px;
+  }
+
+  .addon-subgrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .addon-subcard {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--white);
+    border: 1px dashed rgba(31, 78, 137, 0.28);
+    border-radius: 6px;
+  }
+
+  .addon-subcard__title {
+    font: 600 0.92rem/1.3 var(--font-body);
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .addon-subcard__note {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .addon-subcard__tag {
+    font: 600 0.78rem/1 var(--font-body);
+    color: var(--blue);
+    background: var(--ice);
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 1140px) {
+    .pkgs {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .sectors-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .pkgs {
+      grid-template-columns: 1fr;
+      max-width: 440px;
+      margin-inline: auto;
+    }
+
+    .scale-filter {
+      padding: 16px;
+    }
+
+    .scale-pill {
+      padding: 8px 14px;
+      font-size: 0.86rem;
+    }
+
+    .sectors-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .addon-card {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .addon-subgrid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
