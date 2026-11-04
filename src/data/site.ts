@@ -193,11 +193,11 @@ export const packages = [
   {
     key: "essential",
     name: "Essential",
-    price: 25000000,
-    priceRange: "Rp25–45 juta",
+    price: 35000000,
+    priceRange: "Rp35–50 juta",
     tierPrices: {
-      "Rp10–25 M": "Rp25–30 juta",
-      "Rp25–50 M": "Rp35–45 juta",
+      "Rp10–25 M": "Rp35 juta",
+      "Rp25–50 M": "Rp50 juta",
       "Rp50–100 M+": "Tidak ditawarkan",
     },
     for: "Fondasi kredibilitas awal dan instrumen profil korporat",
@@ -418,8 +418,8 @@ export const scaleTiers = {
     {
       packageName: "Essential",
       tierPrices: {
-        "Rp10–25 M": "Rp25–30 juta",
-        "Rp25–50 M": "Rp35–45 juta",
+        "Rp10–25 M": "Rp35 juta",
+        "Rp25–50 M": "Rp50 juta",
         "Rp50–100 M+": "Tidak ditawarkan",
       },
       duration: "4–6 minggu",

@@ -51,7 +51,7 @@ Jika sitemap diinginkan, tambahkan paket `@astrojs/sitemap` lalu daftarkan di `a
 
 ## Catatan konten
 
-- Harga paket indikatif berjenjang berdasarkan skala investasi: Diagnostik mulai Rp5–8 jt, Essential mulai Rp25–45 jt, Growth mulai Rp50–130 jt, dan Enterprise mulai Rp80–220 jt. Sistem operasional dan modul sektor ditawarkan terpisah.
+- Harga paket indikatif berjenjang berdasarkan skala investasi: Diagnostik mulai Rp5–8 jt, Essential mulai Rp35–50 jt, Growth mulai Rp50–130 jt, dan Enterprise mulai Rp80–220 jt. Sistem operasional dan modul sektor ditawarkan terpisah.
 - Halaman menegaskan bahwa jasa ini bersifat penyiapan dokumen dan tidak menjanjikan pendanaan. Pertahankan kalimat ini agar sesuai dengan surat penawaran.
 - Teks di footer menyebut bahwa dokumen bukan opini audit, hukum, atau pajak.
 
